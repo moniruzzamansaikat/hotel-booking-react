@@ -1,12 +1,37 @@
+import Footer from "./components/Footer";
+
+import HomePage from "./pages/Home";
+import LoginPage from "./pages/Login";
+import RoomsPage from "./pages/Rooms";
+import MyBookings from "./pages/MyBookings";
+
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import BookingPage from "./pages/Bookig";
+
+import RoomContextProvider from "./context/GlobalContextProvider";
+import PrivateRoute from "./components/PrivateRoute";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Hello React</h1>
-      </header>
-    </div>
+    <RoomContextProvider>
+      <Router>
+        <div className="App">
+          <Route path="/" exact component={HomePage} />
+          <Route path="/rooms" exact component={RoomsPage} />
+          <Route path="/login" exact component={LoginPage} />
+          <PrivateRoute path="/booking/:roomId" exact>
+            <BookingPage />
+          </PrivateRoute>
+          <PrivateRoute path="/mybookings" exact>
+            <MyBookings />
+          </PrivateRoute>
+        </div>
+
+        <Footer />
+      </Router>
+    </RoomContextProvider>
   );
 }
 

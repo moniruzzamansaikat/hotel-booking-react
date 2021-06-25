@@ -1,38 +1,77 @@
-.App {
-  text-align: center;
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* #################################### */
+/* App header */
+/* #################################### */
+.app_header {
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("img/header.jpg");
+  min-height: 500px;
+  background-size: cover;
+  background-position: center;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.app_header h1 {
+  margin: 0;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+nav a.nav-link {
+  font-weight: 600;
 }
 
-.App-link {
-  color: #61dafb;
+nav a.nav-link.login_button {
+  box-shadow: 0 0 0 0 !important;
+  background: #8b3151;
+  border: 0 !important;
+  color: #f0f0f0 !important;
+  font-size: 13px;
+  margin-left: 10px;
+  height: 30px;
+  padding: 5px 1rem !important;
+  margin-top: 7px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+nav a.nav-link.login_button:hover,
+nav a.nav-link.login_button:visited,
+nav a.nav-link.login_button:active,
+nav a.nav-link.login_button:focus {
+  background-color: #8b3151 !important;
+}
+
+.section_title {
+  border-left: 2px solid #8b3151;
+  padding-left: 10px;
+  line-height: 1.5rem;
+  margin: 3rem 0;
+}
+
+.text-c-primary {
+  color: #8b3151 !important;
+}
+
+.btn-c-primary {
+  background-color: #8b3151 !important;
+  color: #f0f0f0 !important;
+  box-shadow: 0 0 0 0 !important;
+}
+
+.card.room-card {
+  box-shadow: 1px 4px 16px 4px rgba(0, 0, 0, 0.486);
+}
+
+.card.card-in-room {
+  background: #0000002e;
+  border-radius: 0 !important;
+  border-color: #0000;
+}
+
+.form-control:focus {
+  box-shadow: "0 0 0 0.2rem rgb(139 49 81 / 18%)" !important;
+  border-color: "#8b3151" !important;
+}
+
+.navbar .navlink {
+  font-weight: 300 !important;
 }
