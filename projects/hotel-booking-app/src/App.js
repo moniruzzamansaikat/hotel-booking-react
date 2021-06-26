@@ -7,6 +7,7 @@ import MyBookings from "./pages/MyBookings";
 
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import BookingPage from "./pages/Bookig";
+import RegisterPage from "./pages/Register";
 
 import RoomContextProvider from "./context/GlobalContextProvider";
 import PrivateRoute from "./components/PrivateRoute";
@@ -21,6 +22,7 @@ function App() {
           <Route path="/" exact component={HomePage} />
           <Route path="/rooms" exact component={RoomsPage} />
           <Route path="/login" exact component={LoginPage} />
+          <Route path="/register" exact component={RegisterPage} />
           <PrivateRoute path="/booking/:roomId" exact>
             <BookingPage />
           </PrivateRoute>

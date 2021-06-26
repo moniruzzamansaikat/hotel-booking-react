@@ -48,7 +48,6 @@ const AuthContextProvider = ({ children }) => {
 
 const RoomContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  console.log(firebase.auth().currentUser);
 
   return (
     <RoomContext.Provider value={{ state, dispatch }}>

@@ -7,14 +7,14 @@ import { useContext } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { Google } from "react-bootstrap-icons";
 import { useState } from "react";
-import { googleLogin, login } from "../utils/loginManager";
+import { createUser, googleLogin } from "../utils/loginManager";
 
-function LoginPage() {
+function RegisterPage() {
   const { user, setUser } = useContext(AuthContext);
   const [emailAddress, setEmailAddress] = useState("");
+  const [fullName, setFullName] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState({ email: "", password: "" });
-  const [loggingIn, setLoggingIn] = useState(false);
+  const [message, setMessage] = useState({ email: "", password: "", name: "" });
 
   const history = useHistory();
   const location = useLocation();
@@ -29,8 +29,13 @@ function LoginPage() {
   };
 
   // Custom email and password login
-  const handleCustomLogin = async () => {
-    setLoggingIn(true);
+  const handleRegister = async () => {
+    if (!fullName.trim().length) {
+      setMessage((prev) => ({ ...prev, name: "Please enter your name !" }));
+    } else {
+      setMessage((prev) => ({ ...prev, name: "" }));
+    }
+
     if (!emailAddress.trim().length || !validateEmail(emailAddress)) {
       setMessage((prev) => ({ ...prev, email: "Enter an valid email !" }));
     } else {
@@ -46,15 +51,13 @@ function LoginPage() {
     }
 
     if (Object.values(message).every((item) => item.length === 0)) {
-      const { user, message } = await login({ email: emailAddress, password });
-      console.log({ user, message });
-      if (message) {
-        setMessage((prev) => ({ ...prev, email: message }));
-      }
-      if (user) {
-        setUser(user);
-        history.replace(from);
-      }
+      const user = await createUser({
+        fullName,
+        emailAddress,
+        password,
+      });
+      setUser(user);
+      history.replace(from);
     }
   };
 
@@ -68,13 +71,7 @@ function LoginPage() {
     if (user) {
       history.replace(from);
     }
-  }, [user, message]);
-
-  useEffect(() => {
-    if (!message.email) {
-      setLoggingIn(true);
-    }
-  }, [loggingIn]);
+  }, [user]);
 
   return (
     <div>
@@ -84,6 +81,11 @@ function LoginPage() {
         <Card style={{ margin: "0  auto", width: 400 }} className="my-3">
           <Card.Body>
             <Form>
+              <Form.Group>
+                <Form.Label>Full Name</Form.Label>
+                <Form.Control type="text" onChange={(e) => setFullName(e.target.value)} value={fullName} />
+                {message.name && <small style={{ color: "#b71010", fontSize: "11px" }}>{message.name}</small>}
+              </Form.Group>
               <Form.Group>
                 <Form.Label>Email Address</Form.Label>
                 <Form.Control type="email" onChange={(e) => setEmailAddress(e.target.value)} value={emailAddress} />
@@ -96,7 +98,7 @@ function LoginPage() {
               </Form.Group>
               <Form.Group>
                 <Button
-                  onClick={handleCustomLogin}
+                  onClick={handleRegister}
                   className="btn-block"
                   style={{
                     backgroundColor: "#8b3151",
@@ -105,7 +107,7 @@ function LoginPage() {
                     boxShadow: "0 0 0 0",
                   }}
                 >
-                  {loggingIn ? "..." : "LOGIN"}
+                  REGISTER
                 </Button>
               </Form.Group>
             </Form>
@@ -125,8 +127,8 @@ function LoginPage() {
               <span className="ms-2">LOGIN WITH GOOGLE</span>
             </Button>
             <p className="mt-3" style={{ fontSize: "13px" }}>
-              <span className="mr-2">Don't have an account ?</span>
-              <Link to="/register">Create One</Link>
+              <span className="mr-2">Already have an account ?</span>
+              <Link to="/login">Sign In</Link>
             </p>
           </Card.Body>
         </Card>
@@ -135,4 +137,4 @@ function LoginPage() {
   );
 }
 
-export default LoginPage;
+export default RegisterPage;

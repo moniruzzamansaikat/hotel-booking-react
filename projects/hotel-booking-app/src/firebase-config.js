@@ -1,15 +1,17 @@
 import firebase from "firebase";
 import "firebase/auth";
 
-var firebaseConfig = {
-  apiKey: "AIzaSyB69BB420PSUOL1CgePzGZxvQhJcvVs4QI",
-  authDomain: "hotel-booking-app-a8bbb.firebaseapp.com",
-  projectId: "hotel-booking-app-a8bbb",
-  storageBucket: "hotel-booking-app-a8bbb.appspot.com",
-  messagingSenderId: "589156916664",
-  appId: "1:589156916664:web:d93c6734cdf3eed558834d",
+let firebaseConfig = {
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID,
 };
 
 // Initialize Firebase
 if (firebase.apps.length === 0) firebase.initializeApp(firebaseConfig);
+const settings = { timestampsInSnapshots: true };
+firebase.firestore().settings(settings);
 export default firebase;

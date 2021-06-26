@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { Card } from "react-bootstrap";
+import { Card, Button } from "react-bootstrap";
 import DatePicker from "react-datepicker";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 function RoomCard({ room }) {
   const [personCount, setPersonCount] = useState(1);
@@ -11,6 +11,7 @@ function RoomCard({ room }) {
   const [price, setPrice] = useState(room.price);
   const [totalBill, setTotalBill] = useState(5);
   const [startDate, setStartDate] = useState(new Date());
+  const history = useHistory();
 
   useEffect(() => {
     if (dayCount <= 0) setDayCount(1);
@@ -18,6 +19,21 @@ function RoomCard({ room }) {
 
     setTotalBill(personCount * dayCount * price);
   }, [personCount, dayCount, price]);
+
+  // Store new booking in the global context
+  const submitBooking = () => {
+    const newBooking = {
+      roomId: room.id,
+      roomName: room.name,
+      personCount,
+      dayCount,
+      totalBill,
+      startDate,
+    };
+
+    localStorage.setItem("currentBooking", JSON.stringify(newBooking));
+    history.replace(`/booking/${room.id}`);
+  };
 
   return (
     <Card className="room-card mb-5">
@@ -27,7 +43,6 @@ function RoomCard({ room }) {
         <p className="pricing text-muted">
           ${price}.00 (1 person) - <span className="font-weight-bold text-c-primary">Per Day</span>
         </p>
-
         <Card className="mb-2 p-2 card-in-room">
           <small className="mb-2">
             Total : <span className="font-weight-bold">${totalBill}.00</span>
@@ -59,10 +74,9 @@ function RoomCard({ room }) {
             />
           </div>
         </Card>
-
-        <Link to={`/booking/${room.id}`} className="btn btn-c-primary btn-sm">
+        <Button className="btn btn-c-primary btn-sm" onClick={submitBooking}>
           Book now
-        </Link>
+        </Button>
       </Card.Body>
     </Card>
   );
