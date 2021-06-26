@@ -39,13 +39,13 @@ function Navigation({ bc }) {
               </Link>
             </Nav.Link>
             {user && (
-              <Nav.Link className="text-light" href="#pricing">
+              <Nav.Link className="text-light">
                 <Link to="/mybookings" style={{ textDecoration: "none", color: "#f0f0f0", fontWeight: "300" }}>
                   My Bookings
                 </Link>
               </Nav.Link>
             )}
-            <Nav.Link className="btn btn-primary login_button" href="#">
+            <Nav.Link className="btn btn-primary login_button">
               {user ? (
                 <a href="/login" onClick={handleSignOut} style={{ textDecoration: "none", color: "#f0f0f0" }}>
                   {isLoading ? "loading..." : "Sign Out"}

@@ -9,6 +9,7 @@ import CountDown from "react-countdown";
 
 function LoginPage() {
   const [bookings, setBookings] = useState([]);
+  const [changed, setChanged] = useState(false);
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
@@ -18,15 +19,21 @@ function LoginPage() {
       .where("email", "==", user.email)
       .get()
       .then((snapshot) => {
-        console.log(snapshot.docs);
         setBookings(snapshot.docs);
       });
-  }, []);
+  }, [changed]);
 
-  const handleCancleBooking = (doc) => {
-    // firebase.firestore().collection('bookings').where('email', '==', user.email)
-    alert(doc.uid);
-    console.log(doc._id);
+  const handleCancleBooking = (id) => {
+    setChanged(!changed);
+    firebase
+      .firestore()
+      .collection("bookings")
+      .doc(id)
+      .delete()
+      .then((what) => {
+        console.log(what);
+      })
+      .catch((error) => console.log(error));
   };
 
   return (
@@ -57,7 +64,7 @@ function LoginPage() {
                       <br />
                       <br />
                       {cancelable ? (
-                        <Button variant="danger" onClick={() => handleCancleBooking(booking)}>
+                        <Button variant="danger" onClick={() => handleCancleBooking(booking.id)}>
                           Cancel Booking
                         </Button>
                       ) : null}

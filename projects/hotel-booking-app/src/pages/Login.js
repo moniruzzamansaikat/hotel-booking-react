@@ -105,7 +105,7 @@ function LoginPage() {
                     boxShadow: "0 0 0 0",
                   }}
                 >
-                  {loggingIn ? "..." : "LOGIN"}
+                  LOGIN
                 </Button>
               </Form.Group>
             </Form>
